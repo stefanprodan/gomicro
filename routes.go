@@ -16,7 +16,7 @@ func homeRouter() http.Handler {
 
 func promRouter() http.Handler {
 	r := chi.NewRouter()
-	r.Use(Prom)
+	r.Use(PromMetrics)
 	r.Get("/", emptyHandler)
 	return r
 }
