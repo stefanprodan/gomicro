@@ -3,6 +3,8 @@ package main
 import (
 	"context"
 	"net/http"
+
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 func AppMiddleware(appCtx AppContext) func(next http.Handler) http.Handler {
@@ -14,4 +16,8 @@ func AppMiddleware(appCtx AppContext) func(next http.Handler) http.Handler {
 		}
 		return http.HandlerFunc(fn)
 	}
+}
+
+func Prom(next http.Handler) http.Handler {
+	return promhttp.Handler()
 }

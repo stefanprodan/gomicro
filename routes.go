@@ -13,3 +13,10 @@ func homeRouter() http.Handler {
 	r.Get("/panic", homePanic)
 	return r
 }
+
+func promRouter() http.Handler {
+	r := chi.NewRouter()
+	r.Use(Prom)
+	r.Get("/", emptyHandler)
+	return r
+}

@@ -35,6 +35,7 @@ func StartServer(appCtx AppContext) {
 
 	// routes
 	r.Mount("/", homeRouter())
+	r.Mount("/metrics", promRouter())
 
 	//file server
 	filesDir := filepath.Join(appCtx.WorkDir, "assets")
