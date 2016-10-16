@@ -1,0 +1,37 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "Thw6jmFtl5e3GBTygfVfoSmpUcI=",
+			"path": "github.com/palantir/stacktrace",
+			"revision": "5a74c62b11cfd8b2cb9374c785dd965d9a2b4e53",
+			"revisionTime": "2016-04-10T20:59:47Z"
+		},
+		{
+			"checksumSHA1": "0tatanyeNX2xq/nZXnWDGL2W9bg=",
+			"path": "github.com/palantir/stacktrace/cleanpath",
+			"revision": "5a74c62b11cfd8b2cb9374c785dd965d9a2b4e53",
+			"revisionTime": "2016-04-10T20:59:47Z"
+		},
+		{
+			"checksumSHA1": "nP3GnoCsj6R6uHtdlHeO8C5U06k=",
+			"path": "github.com/pressly/chi",
+			"revision": "2cad94402baa6eb7584258df02fed068f1502ada",
+			"revisionTime": "2016-10-07T19:28:15Z"
+		},
+		{
+			"checksumSHA1": "BVNpe2CXkNUQ/GexP7wisQh/FcM=",
+			"path": "github.com/pressly/chi/middleware",
+			"revision": "2cad94402baa6eb7584258df02fed068f1502ada",
+			"revisionTime": "2016-10-07T19:28:15Z"
+		},
+		{
+			"checksumSHA1": "UhwJY3Oqer9FbsV5LqRfasTqUSo=",
+			"path": "github.com/unrolled/render",
+			"revision": "526faf80cd4b305bb8134abea8d20d5ced74faa6",
+			"revisionTime": "2016-10-03T17:53:27Z"
+		}
+	],
+	"rootPath": "github.com/stefanprodan/gomicro"
+}
