@@ -26,3 +26,6 @@ func homePing(w http.ResponseWriter, r *http.Request) {
 func homePanic(w http.ResponseWriter, r *http.Request) {
 	panic("ERROR!!!")
 }
+func emptyHandler(w http.ResponseWriter, r *http.Request) {
+
+}
