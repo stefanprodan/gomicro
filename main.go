@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"os"
+	"time"
 )
 
 func main() {
@@ -28,12 +29,13 @@ func main() {
 	}
 
 	appCtx := AppContext{
-		Role:    role,
-		Version: version,
-		Env:     env,
-		Host:    host,
-		Port:    port,
-		WorkDir: workDir,
+		Role:      role,
+		Version:   version,
+		Env:       env,
+		Host:      host,
+		Port:      port,
+		WorkDir:   workDir,
+		StartTime: time.Now(),
 	}
 
 	log.Println("Starting gomicro v" + appCtx.Version + " on " + appCtx.Host + ":" + appCtx.Port + " in " + appCtx.Env + " mode.")
