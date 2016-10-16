@@ -5,21 +5,19 @@ import (
 	"os"
 )
 
-const debug string = "DEBUG"
-
 func main() {
 	var (
 		role       = os.Getenv("ROLE")
-		env        = os.Getenv("ENV") // DEBUG, DEV, STG, PRD
+		env        = os.Getenv("ENV") // DEBUG, DEV, STG, PROD
 		port       = os.Getenv("PORT")
 		host, _    = os.Hostname()
 		workDir, _ = os.Getwd()
 	)
 
-	// debug defaults
-	if env == "" || env == debug {
+	// defaults
+	if env == "" {
 		role = "worker"
-		env = debug
+		env = "DEBUG"
 		port = "3001"
 	}
 
