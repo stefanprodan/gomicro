@@ -8,18 +8,20 @@ import (
 
 func main() {
 	var (
-		role       = os.Getenv("ROLE")
-		env        = os.Getenv("ENV") // DEBUG, DEV, STG, PROD
+		role       = os.Getenv("ROLE") // worker, proxy, ping
+		env        = os.Getenv("ENV")  // DEBUG, DEV, STG, PROD
 		port       = os.Getenv("PORT")
+		endpoints  = os.Getenv("ENDPOINTS")
 		host, _    = os.Hostname()
 		workDir, _ = os.Getwd()
 	)
 
 	// defaults
 	if env == "" {
-		role = "worker"
+		role = "proxy"
 		env = "DEBUG"
 		port = "3001"
+		endpoints = "http://localhost:3001"
 	}
 
 	// reading version from file
@@ -36,6 +38,7 @@ func main() {
 		Port:      port,
 		WorkDir:   workDir,
 		StartTime: time.Now(),
+		Endpoints: endpoints,
 	}
 
 	log.Println("Starting gomicro v" + appCtx.Version + " on " + appCtx.Host + ":" + appCtx.Port + " in " + appCtx.Env + " mode.")

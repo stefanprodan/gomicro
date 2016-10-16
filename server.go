@@ -31,7 +31,10 @@ func StartServer(appCtx AppContext) {
 	// chi middleware stack
 	r.Use(middleware.RequestID)
 	r.Use(middleware.RealIP)
-	r.Use(middleware.Logger)
+
+	if appCtx.Env == "DEBUG" {
+		r.Use(middleware.Logger)
+	}
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.Timeout(60 * time.Second))
 
@@ -40,6 +43,7 @@ func StartServer(appCtx AppContext) {
 
 	// routes
 	r.Mount("/", homeRouter())
+	r.Mount("/ingest", ingestRouter())
 	r.Mount("/metrics", promRouter())
 
 	//file server

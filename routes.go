@@ -20,3 +20,10 @@ func promRouter() http.Handler {
 	r.Get("/", emptyHandler)
 	return r
 }
+
+func ingestRouter() http.Handler {
+	r := chi.NewRouter()
+	r.Post("/event", eventIngestHandler)
+	r.Post("/data", dataIngestHandler)
+	return r
+}

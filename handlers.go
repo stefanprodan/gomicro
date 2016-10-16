@@ -1,7 +1,11 @@
 package main
 
 import (
+	"bytes"
+	"encoding/json"
+	"log"
 	"net/http"
+	"strings"
 )
 
 func homeIndex(w http.ResponseWriter, r *http.Request) {
@@ -25,6 +29,67 @@ func homePing(w http.ResponseWriter, r *http.Request) {
 
 func homePanic(w http.ResponseWriter, r *http.Request) {
 	panic("ERROR!!!")
+}
+
+func eventIngestHandler(w http.ResponseWriter, r *http.Request) {
+	decoder := json.NewDecoder(r.Body)
+
+	var p Payload
+	err := decoder.Decode(&p)
+	if err != nil {
+		log.Println(err.Error())
+		response := Status{
+			Status:  "400",
+			Message: "malformed data",
+		}
+		rnd.JSON(w, http.StatusBadRequest, response)
+		return
+	}
+
+	ctx := r.Context()
+	app, _ := ctx.Value("app").(AppContext)
+	if app.Role == "proxy" && app.Endpoints != "" {
+		endpoints := strings.Split(app.Endpoints, ",")
+		for _, endpoint := range endpoints {
+			err := redirectPaylod(p, endpoint+"/ingest/data")
+			if err != nil {
+				response := Status{
+					Status:  "502",
+					Message: "endpoint " + endpoint + " error: " + err.Error(),
+				}
+				rnd.JSON(w, http.StatusBadGateway, response)
+			}
+		}
+	}
+}
+
+func redirectPaylod(p Payload, url string) error {
+	b := new(bytes.Buffer)
+	json.NewEncoder(b).Encode(p)
+
+	r, err := http.Post(url, "application/json; charset=utf-8", b)
+	if err != nil {
+		return err
+	}
+	defer r.Body.Close()
+
+	return nil
+}
+
+func dataIngestHandler(w http.ResponseWriter, r *http.Request) {
+	decoder := json.NewDecoder(r.Body)
+
+	var p Payload
+	err := decoder.Decode(&p)
+	if err != nil {
+		log.Println(err.Error())
+		response := Status{
+			Status:  "400",
+			Message: "malformed data",
+		}
+		rnd.JSON(w, http.StatusBadRequest, response)
+		return
+	}
 }
 func emptyHandler(w http.ResponseWriter, r *http.Request) {
 
