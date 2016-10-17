@@ -19,27 +19,27 @@ docker run -d -p 3020:3000 \
 --name "${image}-worker-alpha" \
 --network "$network" \
 --restart unless-stopped \
--e ENV="DEBUG" \
+-e ENV="PROD" \
 -e ROLE="worker" \
 -e PORT="3000" \
 $image 
 
-docker run -d -p 3030:3000 \
---name "${image}-worker-beta" \
---network "$network" \
---restart unless-stopped \
--e ENV="DEBUG" \
--e ROLE="worker" \
--e PORT="3000" \
-$image 
+#docker run -d -p 3030:3000 \
+#--name "${image}-worker-beta" \
+#--network "$network" \
+#--restart unless-stopped \
+#-e ENV="PROD" \
+#-e ROLE="worker" \
+#-e PORT="3000" \
+#$image 
 
 # start proxy
 docker run -d -p 3010:3000 \
 --name "${image}-proxy" \
 --network "$network" \
 --restart unless-stopped \
--e ENV="DEBUG" \
+-e ENV="PROD" \
 -e ROLE="proxy" \
 -e PORT="3000" \
--e ENDPOINTS="http://${image}-worker-alpha:3000,http://${image}-worker-beta:3000" \
+-e ENDPOINTS="http://${image}-worker-alpha:3000" \
 $image 
