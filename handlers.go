@@ -68,7 +68,7 @@ func redirectPaylod(p Payload, url string) error {
 
 	transport := &http.Transport{
 		DisableKeepAlives:   true,
-		MaxIdleConnsPerHost: 0,
+		MaxIdleConnsPerHost: 100,
 	}
 
 	b := new(bytes.Buffer)
@@ -76,7 +76,6 @@ func redirectPaylod(p Payload, url string) error {
 
 	client := &http.Client{
 		Transport: transport,
-		Timeout:   5,
 	}
 
 	r, err := client.Post(url, "application/json; charset=utf-8", b)
