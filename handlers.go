@@ -53,6 +53,7 @@ func eventIngestHandler(w http.ResponseWriter, r *http.Request) {
 		for _, endpoint := range endpoints {
 			err := redirectPaylod(p, endpoint+"/ingest/data")
 			if err != nil {
+				log.Println(err.Error())
 				response := Status{
 					Status:  "502",
 					Message: "endpoint " + endpoint + " error: " + err.Error(),
