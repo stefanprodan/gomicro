@@ -22,21 +22,21 @@ func StartServer(appCtx AppContext) {
 
 	r := chi.NewRouter()
 
-	r.Use(middleware.CloseNotify)
+	//r.Use(middleware.CloseNotify)
 
 	//prometheus metrics
 	promRegister()
 	r.Use(PromMiddleware)
 
 	// chi middleware stack
-	r.Use(middleware.RequestID)
-	r.Use(middleware.RealIP)
+	//r.Use(middleware.RequestID)
+	//r.Use(middleware.RealIP)
 
 	if appCtx.Env == "DEBUG" {
 		r.Use(middleware.Logger)
 	}
 	r.Use(middleware.Recoverer)
-	r.Use(middleware.Timeout(60 * time.Second))
+	//r.Use(middleware.Timeout(60 * time.Second))
 
 	// global middleware
 	r.Use(AppMiddleware(appCtx))
