@@ -65,10 +65,21 @@ func eventIngestHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func redirectPaylod(p Payload, url string) error {
+
+	transport := &http.Transport{
+		DisableKeepAlives:   true,
+		MaxIdleConnsPerHost: 0,
+	}
+
 	b := new(bytes.Buffer)
 	json.NewEncoder(b).Encode(p)
 
-	r, err := http.Post(url, "application/json; charset=utf-8", b)
+	client := &http.Client{
+		Transport: transport,
+		Timeout:   5,
+	}
+
+	r, err := client.Post(url, "application/json; charset=utf-8", b)
 	if err != nil {
 		return err
 	}
