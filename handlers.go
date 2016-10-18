@@ -51,7 +51,7 @@ func eventIngestHandler(w http.ResponseWriter, r *http.Request) {
 	if app.Role == "proxy" && app.Endpoints != "" {
 		endpoints := strings.Split(app.Endpoints, ",")
 		for _, endpoint := range endpoints {
-			err := redirectPaylod(p, endpoint+"/ingest/data")
+			err := redirectPayload(p, endpoint+"/ingest/data")
 			if err != nil {
 				log.Println(err.Error())
 				response := Status{
@@ -64,7 +64,7 @@ func eventIngestHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func redirectPaylod(p Payload, url string) error {
+func redirectPayload(p Payload, url string) error {
 
 	transport := &http.Transport{
 		DisableKeepAlives:   true,
