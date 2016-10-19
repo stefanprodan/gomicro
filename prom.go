@@ -11,7 +11,7 @@ var http_requests_total = prometheus.NewCounterVec(
 	prometheus.CounterOpts{
 		Namespace: "go",
 		Subsystem: "micro",
-		Name:      "http_request_count",
+		Name:      "http_requests_total",
 		Help:      "The number of HTTP requests.",
 	},
 	[]string{"role", "method", "path", "status"},
