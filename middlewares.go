@@ -34,7 +34,8 @@ func PromMiddleware(next http.Handler) http.Handler {
 
 		// ignore websockets and the /metrics endpoint
 		if !isWSRequest(r) && !isPromRequest(r) {
-			http_requests_total.WithLabelValues(r.Method, r.URL.Path, status).Inc()
+			app, _ := r.Context().Value("app").(AppContext)
+			http_requests_total.WithLabelValues(app.Role, r.Method, r.URL.Path, status).Inc()
 			//http_requests_latency.WithLabelValues(r.Method, r.URL.Path, status).Observe(took.Seconds())
 		}
 	})

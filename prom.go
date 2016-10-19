@@ -9,10 +9,12 @@ import (
 
 var http_requests_total = prometheus.NewCounterVec(
 	prometheus.CounterOpts{
-		Name: "http_request_count",
-		Help: "The number of HTTP requests.",
+		Namespace: "go",
+		Subsystem: "micro",
+		Name:      "http_request_count",
+		Help:      "The number of HTTP requests.",
 	},
-	[]string{"method", "path", "status"},
+	[]string{"role", "method", "path", "status"},
 )
 
 var http_requests_latency = prometheus.NewSummaryVec(

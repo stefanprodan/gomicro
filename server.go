@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 	"path/filepath"
-	//"time"
+	"time"
 
 	"github.com/pressly/chi"
 	"github.com/pressly/chi/middleware"
@@ -22,24 +22,21 @@ func StartServer(appCtx AppContext) {
 
 	r := chi.NewRouter()
 
-	//r.Use(middleware.CloseNotify)
+	r.Use(AppMiddleware(appCtx))
 
-	//prometheus metrics
+	// prometheus
 	promRegister()
 	r.Use(PromMiddleware)
 
-	// chi middleware stack
 	r.Use(middleware.RequestID)
 	r.Use(middleware.RealIP)
 
 	if appCtx.Env == "DEBUG" {
 		r.Use(middleware.Logger)
 	}
-	r.Use(middleware.Recoverer)
-	//r.Use(middleware.Timeout(60 * time.Second))
 
-	// global middleware
-	r.Use(AppMiddleware(appCtx))
+	r.Use(middleware.Recoverer)
+	r.Use(middleware.Timeout(60 * time.Second))
 
 	// routes
 	r.Mount("/", homeRouter())
