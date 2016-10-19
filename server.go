@@ -13,7 +13,7 @@ import (
 
 var rnd *render.Render
 
-func StartServer(appCtx AppContext) {
+func StartServer(appCtx AppSettings) {
 
 	rnd = render.New(render.Options{
 		IndentJSON: true,
@@ -24,8 +24,6 @@ func StartServer(appCtx AppContext) {
 
 	r.Use(AppMiddleware(appCtx))
 
-	// prometheus
-	promRegister()
 	r.Use(PromMiddleware)
 
 	r.Use(middleware.RequestID)
@@ -33,6 +31,8 @@ func StartServer(appCtx AppContext) {
 
 	if appCtx.Env == "DEBUG" {
 		r.Use(middleware.Logger)
+	} else {
+		r.Use(LogHttpErrorsMiddleware)
 	}
 
 	r.Use(middleware.Recoverer)

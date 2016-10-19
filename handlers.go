@@ -10,7 +10,7 @@ import (
 
 func homeIndex(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
-	app, ok := ctx.Value("app").(AppContext)
+	app, ok := ctx.Value("app").(AppSettings)
 	if !ok {
 		http.Error(w, http.StatusText(422), 422)
 		return
@@ -47,7 +47,7 @@ func eventIngestHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ctx := r.Context()
-	app, _ := ctx.Value("app").(AppContext)
+	app, _ := ctx.Value("app").(AppSettings)
 	if app.Role == "proxy" && app.Endpoints != "" {
 		endpoints := strings.Split(app.Endpoints, ",")
 		for _, endpoint := range endpoints {

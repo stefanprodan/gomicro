@@ -3,12 +3,13 @@ package main
 import (
 	"log"
 	"os"
+	"os/signal"
 	"time"
 )
 
 func main() {
 	var (
-		role       = os.Getenv("ROLE") // worker, proxy, ping
+		role       = os.Getenv("ROLE") // worker, proxy, monitor
 		env        = os.Getenv("ENV")  // DEBUG, DEV, STG, PROD
 		port       = os.Getenv("PORT")
 		endpoints  = os.Getenv("ENDPOINTS")
@@ -30,19 +31,33 @@ func main() {
 		log.Fatal(err)
 	}
 
-	appCtx := AppContext{
-		Role:      role,
-		Version:   version,
-		Env:       env,
-		Host:      host,
-		Port:      port,
-		WorkDir:   workDir,
-		StartTime: time.Now(),
-		Endpoints: endpoints,
+	app := AppSettings{
+		Role:         role,
+		Version:      version,
+		Env:          env,
+		Host:         host,
+		Port:         port,
+		WorkDir:      workDir,
+		StartTime:    time.Now(),
+		Endpoints:    endpoints,
+		PingInterval: 1000,
 	}
 
-	log.Println("Starting gomicro v" + appCtx.Version + " on " + appCtx.Host + ":" + appCtx.Port + " in " + appCtx.Env + " mode.")
+	log.Println("Starting gomicro v" + app.Version + " on " + app.Host + ":" + app.Port + " in " + app.Env + " mode.")
 
-	// start HTTP server
-	StartServer(appCtx)
+	PromRegister()
+
+	// start services
+	go StartServer(app)
+
+	if role == "monitor" {
+		go StartHealthCheck(app)
+	}
+
+	// block
+	osChan := make(chan os.Signal, 1)
+	signal.Notify(osChan, os.Interrupt, os.Kill)
+	osSignal := <-osChan
+
+	log.Printf("Exiting! OS signal: %v", osSignal)
 }

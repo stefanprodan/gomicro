@@ -25,8 +25,19 @@ var http_requests_latency = prometheus.NewSummaryVec(
 	[]string{"method", "path", "status"},
 )
 
-func promRegister() {
+var http_healthcheck_total = prometheus.NewCounterVec(
+	prometheus.CounterOpts{
+		Namespace: "go",
+		Subsystem: "micro",
+		Name:      "http_healthcheck_total",
+		Help:      "The number of healthcheck requests.",
+	},
+	[]string{"target", "status"},
+)
+
+func PromRegister() {
 	prometheus.MustRegister(http_requests_total)
+	prometheus.MustRegister(http_healthcheck_total)
 	//prometheus.MustRegister(http_requests_latency)
 }
 
