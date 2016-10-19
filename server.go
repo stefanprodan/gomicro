@@ -29,8 +29,8 @@ func StartServer(appCtx AppContext) {
 	r.Use(PromMiddleware)
 
 	// chi middleware stack
-	//r.Use(middleware.RequestID)
-	//r.Use(middleware.RealIP)
+	r.Use(middleware.RequestID)
+	r.Use(middleware.RealIP)
 
 	if appCtx.Env == "DEBUG" {
 		r.Use(middleware.Logger)

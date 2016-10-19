@@ -25,7 +25,7 @@ var http_requests_latency = prometheus.NewSummaryVec(
 
 func promRegister() {
 	prometheus.MustRegister(http_requests_total)
-	prometheus.MustRegister(http_requests_latency)
+	//prometheus.MustRegister(http_requests_latency)
 }
 
 func isWSRequest(req *http.Request) bool {
