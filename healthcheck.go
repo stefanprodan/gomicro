@@ -2,6 +2,7 @@ package main
 
 import (
 	"io/ioutil"
+	"log"
 	"net/http"
 	"regexp"
 	"strconv"
@@ -42,6 +43,7 @@ func checkTarget(endpoint string, timeout int) {
 	r, err := client.Get(endpoint + "/ping")
 	if err != nil {
 		http_healthcheck_total.WithLabelValues(target, strconv.Itoa(status)).Inc()
+		log.Println(err.Error())
 		return
 	}
 
