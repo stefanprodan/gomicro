@@ -28,7 +28,9 @@ func checkTarget(endpoint string, timeout int) {
 	isValid := false
 	repl := strings.NewReplacer("http://", "", "https://", "")
 	target := repl.Replace(endpoint)
-
+	if target == "" {
+		return
+	}
 	transport := &http.Transport{
 		DisableKeepAlives:   true,
 		MaxIdleConnsPerHost: 0,
