@@ -19,8 +19,10 @@ var http_requests_total = prometheus.NewCounterVec(
 
 var http_requests_latency = prometheus.NewSummaryVec(
 	prometheus.SummaryOpts{
-		Name: "http_request_latency",
-		Help: "The latency of HTTP requests.",
+		Namespace: "go",
+		Subsystem: "micro",
+		Name:      "http_request_latency",
+		Help:      "The latency of HTTP requests.",
 	},
 	[]string{"method", "path", "status"},
 )
@@ -37,8 +39,10 @@ var http_healthcheck_total = prometheus.NewCounterVec(
 
 var http_healthcheck_latency = prometheus.NewSummaryVec(
 	prometheus.SummaryOpts{
-		Name: "http_healthcheck_latency",
-		Help: "The latency of healthcheck requests.",
+		Namespace: "go",
+		Subsystem: "micro",
+		Name:      "http_healthcheck_latency",
+		Help:      "The latency of healthcheck requests.",
 	},
 	[]string{"target"},
 )
