@@ -43,5 +43,5 @@ docker run -d -p 3030:3000 \
 -e ENV="PROD" \
 -e ROLE="monitor" \
 -e PORT="3000" \
--e ENDPOINTS="http://${image}-worker:3000, http://${image}-proxy:3000" \
+-e ENDPOINTS="http://${image}-worker:3000,http://${image}-proxy:3000" \
 $image 

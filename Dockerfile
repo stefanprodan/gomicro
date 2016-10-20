@@ -16,5 +16,7 @@ RUN go build -o gomicro .
 
 HEALTHCHECK CMD curl --fail http://localhost:3000/ping || exit 1
 
+EXPOSE 3000/tcp
+
 # run
 CMD ["/app/gomicro"]
