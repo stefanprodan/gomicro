@@ -23,7 +23,7 @@ func StartHealthCheck(appCtx AppSettings) {
 }
 
 func checkTarget(endpoint string, timeout int) {
-
+	begin := time.Now()
 	status := 1
 	isValid := false
 	repl := strings.NewReplacer("http://", "", "https://", "")
@@ -46,6 +46,7 @@ func checkTarget(endpoint string, timeout int) {
 		log.Println(err.Error())
 		return
 	}
+	defer r.Body.Close()
 
 	status = r.StatusCode
 	for i := 200; i <= 299; i++ {
@@ -74,6 +75,7 @@ func checkTarget(endpoint string, timeout int) {
 		status = 3
 	}
 
+	took := time.Since(begin)
 	http_healthcheck_total.WithLabelValues(target, strconv.Itoa(status)).Inc()
-	defer r.Body.Close()
+	http_healthcheck_latency.WithLabelValues(target).Observe(took.Seconds())
 }

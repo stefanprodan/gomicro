@@ -35,10 +35,20 @@ var http_healthcheck_total = prometheus.NewCounterVec(
 	[]string{"target", "status"},
 )
 
+var http_healthcheck_latency = prometheus.NewSummaryVec(
+	prometheus.SummaryOpts{
+		Name: "http_healthcheck_latency",
+		Help: "The latency of healthcheck requests.",
+	},
+	[]string{"target"},
+)
+
 func PromRegister() {
 	prometheus.MustRegister(http_requests_total)
-	prometheus.MustRegister(http_healthcheck_total)
 	//prometheus.MustRegister(http_requests_latency)
+
+	prometheus.MustRegister(http_healthcheck_total)
+	prometheus.MustRegister(http_healthcheck_latency)
 }
 
 func isWSRequest(req *http.Request) bool {

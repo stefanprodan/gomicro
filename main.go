@@ -50,9 +50,9 @@ func main() {
 	// start services
 	go StartServer(app)
 
-	if role == "monitor" {
-		go StartHealthCheck(app)
-	}
+	//if role == "monitor" {
+	go StartHealthCheck(app)
+	//}
 
 	// block
 	osChan := make(chan os.Signal, 1)
