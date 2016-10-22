@@ -21,6 +21,8 @@ docker run -d -p 3020:3000 \
 --restart unless-stopped \
 -e "SERVICE_NAME=${image}-worker" \
 -e "SERVICE_TAGS=gomicro,production" \
+-e SERVICE_3020_CHECK_HTTP="/ping" \
+-e SERVICE_3020_CHECK_INTERVAL="15s" \
 -e ENV="PROD" \
 -e ROLE="worker" \
 -e PORT="3000" \
@@ -33,6 +35,8 @@ docker run -d -p 3010:3000 \
 --restart unless-stopped \
 -e "SERVICE_NAME=${image}-proxy" \
 -e "SERVICE_TAGS=gomicro,production" \
+-e SERVICE_3010_CHECK_HTTP="/ping" \
+-e SERVICE_3010_CHECK_INTERVAL="15s" \
 -e ENV="PROD" \
 -e ROLE="proxy" \
 -e PORT="3000" \
@@ -46,6 +50,8 @@ docker run -d -p 3030:3000 \
 --restart unless-stopped \
 -e "SERVICE_NAME=${image}-monitor" \
 -e "SERVICE_TAGS=gomicro,production" \
+-e SERVICE_3000_CHECK_HTTP="/ping" \
+-e SERVICE_3000_CHECK_INTERVAL="15s" \
 -e ENV="PROD" \
 -e ROLE="monitor" \
 -e PORT="3000" \
