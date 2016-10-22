@@ -19,7 +19,7 @@ func main() {
 
 	// defaults
 	if env == "" {
-		role = "proxy"
+		role = "monitor"
 		env = "DEBUG"
 		port = "3001"
 		endpoints = "http://localhost:3001"

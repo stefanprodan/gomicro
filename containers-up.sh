@@ -6,7 +6,7 @@ network="gomicro-net"
 
 # build image
 if [ ! "$(docker images -q  $image)" ];then
-    docker build -t $image .
+    docker build -t $image ./src/gomicro
 fi
 
 # create network
