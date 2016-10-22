@@ -21,4 +21,4 @@ docker run -d \
 --net=host \
 --volume=/var/run/docker.sock:/tmp/docker.sock \
 --restart unless-stopped \
-gliderlabs/registrator consul://192.168.1.134:8500 -ip=$hostIP
+gliderlabs/registrator -ip="${hostIP}" consul://${hostIP}:8500 
